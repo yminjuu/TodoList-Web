@@ -42,12 +42,14 @@ const Home = () => {
     height: 261px;
     flex-shrink: 0;
     grid-area: 1 / 1 / 2 / 2; /* 1행 1열 */
+    background: transparent;
   `;
 
   const CalendarInnerContainer = styled(BaseInnerContainer)`
     width: 355px;
     height: 249px;
     flex-shrink: 0;
+    background: #fff;
   `;
 
   const TODOContainer = styled(BaseContainer)`
