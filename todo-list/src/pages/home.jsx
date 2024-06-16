@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import TodoItem from "../components/TodoItem";
+
 import {
   BaseContainer,
   BaseInnerContainer,
@@ -104,13 +106,14 @@ const Home = () => {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    resize: none;
   `;
 
   const ButtonWrapper = styled.div`
-    margin-right: 30px;
+    margin-right: 40px;
     margin-bottom: 5px;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     height: auto;
     background: transparent;
     display: flex;
@@ -135,6 +138,15 @@ const Home = () => {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
+    background: transparent;
+  `;
+
+  const TodoListWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    margin: 5px 0px 1px 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background: transparent;
   `;
 
@@ -166,6 +178,39 @@ const Home = () => {
           <ListContainer>
             <ListInnerContainer>
               <ContainerTitle>MY TODO LIST</ContainerTitle>
+              <TodoListWrapper>
+                {/* 실제 db에서 데이터 가져와야 함: TODO LIST */}
+                <TodoItem
+                  id={0}
+                  isChecked={true}
+                  content={"할 일 1"}
+                  emoticon={"none"}
+                ></TodoItem>
+                <TodoItem
+                  id={0}
+                  isChecked={true}
+                  content={"할 일 2"}
+                  emoticon={"none"}
+                ></TodoItem>
+                <TodoItem
+                  id={0}
+                  isChecked={true}
+                  content={"할 일 3"}
+                  emoticon={"none"}
+                ></TodoItem>
+                <TodoItem
+                  id={0}
+                  isChecked={true}
+                  content={"할 일 4"}
+                  emoticon={"none"}
+                ></TodoItem>
+                <TodoItem
+                  id={0}
+                  isChecked={true}
+                  content={"할 일 5"}
+                  emoticon={"none"}
+                ></TodoItem>
+              </TodoListWrapper>
             </ListInnerContainer>
           </ListContainer>
         </GridLayout>
