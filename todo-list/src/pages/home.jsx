@@ -23,8 +23,8 @@ const Home = () => {
   `;
 
   const Logo = styled.img`
-    width: 180px;
-    height: 70px;
+    width: 200px;
+    height: 90px;
     background: transparent;
   `;
 
@@ -104,7 +104,7 @@ const Home = () => {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 10px;
     font-size: 15px;
-    color: #b0b0b0;
+    color: #6f6f6f;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 400;

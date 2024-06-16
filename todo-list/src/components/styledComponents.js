@@ -70,20 +70,20 @@ export const Input = styled.input`
   flex-shrink: 0;
   border-radius: 5px;
   border: 2px solid #fff;
-  opacity: 0.3;
+  opacity: 0.5;
   background: #fff;
   box-shadow: 0px 4px 4px 0px #000;
   text-align: center;
-  font-size: 15px;
+  font-size: 17px;
 `;
 
 export const SubmitButton = styled.button`
   width: 100px;
-  height: 48px;
+  height: 35px;
   flex-shrink: 0;
   border-radius: 20px;
   border: 2px solid #595656;
-  opacity: 0.3;
+  opacity: 0.5;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
   text-align: center;
