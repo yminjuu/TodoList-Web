@@ -9,7 +9,7 @@
 - 데이터베이스 연결
 - 달력 디테일 추가 : 각 달의 주 수에 따라 동적으로 달력 크기 조절
 - ADD TODO - TODO LIST : 데이터 연결
-- TODO LIST: 버튼 체크시 최하단으로 / 이모지 추가 / 수정 기능 / 삭제 기능
+- TODO LIST: 버튼 체크시 최하단으로 / 이모지 추가 / 데이터 추가 및 삭제 기능
 
 ### Login Page
 ![image](https://github.com/yminjuu/TodoList-Web/assets/124325672/6f5141a0-d918-4e9e-b224-a7a514cf23b9)
