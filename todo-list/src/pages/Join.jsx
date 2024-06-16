@@ -22,22 +22,22 @@ const Join = () => {
   const [pw, setPw] = useState("");
 
   const CustomSubmitButton = styled(OrgSubmitButton)`
-    width: 80px;
+    width: 160px;
   `;
 
   const ButtonWrapper = styled.div`
     width: auto;
-    min-width: 200px;
+    min-width: 20rem;
     background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
   `;
 
   const LoginButton = styled.button`
-    width: 150px;
-    height: 40px;
+    width: 250px;
+    height: 60px;
     border-radius: 0.9375rem;
     border: 2px solid #fff;
     opacity: 0.5;
@@ -47,6 +47,7 @@ const Join = () => {
     background: transparent;
     color: #333333;
     font-weight: 700;
+    font-size: 20px;
   `;
 
   return (

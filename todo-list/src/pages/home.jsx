@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import TodoItem from "../components/TodoItem";
+import Calendar from "../components/Calendar";
 
 import {
   BaseContainer,
@@ -162,7 +163,9 @@ const Home = () => {
       <ContentWrapper>
         <GridLayout>
           <CalendarContainer>
-            <CalendarInnerContainer></CalendarInnerContainer>
+            <CalendarInnerContainer>
+              <Calendar></Calendar>
+            </CalendarInnerContainer>
           </CalendarContainer>
           <TODOContainer>
             <TODOInnerContainer>
