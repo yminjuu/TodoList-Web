@@ -23,16 +23,17 @@ const Join = () => {
 
   const CustomSubmitButton = styled(OrgSubmitButton)`
     width: 80px;
+    height: 45px;
   `;
 
   const ButtonWrapper = styled.div`
     width: auto;
-    min-width: 200px;
+    min-width: 15rem;
     background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
   `;
 
   const LoginButton = styled.button`

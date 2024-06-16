@@ -15,8 +15,8 @@ export const LogoWrapper = styled.div`
   flex-direction: column;
   justify-content: left;
   padding: 60px;
-  margin-left: 60px;
-  margin-top: 60px;
+  margin-left: 100px;
+  margin-top: 100px;
   background: transparent;
   gap: 50px;
 `;
@@ -57,7 +57,7 @@ export const Description = styled.div`
   color: #fff;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: Pretendard;
-  font-size: 20px;
+  font-size: 25px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -65,25 +65,25 @@ export const Description = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 10rem;
-  height: 3rem;
+  width: 15rem;
+  height: 4rem;
   flex-shrink: 0;
   border-radius: 5px;
   border: 2px solid #fff;
-  opacity: 0.3;
+  opacity: 0.5;
   background: #fff;
   box-shadow: 0px 4px 4px 0px #000;
   text-align: center;
-  font-size: 15px;
+  font-size: 17px;
 `;
 
 export const SubmitButton = styled.button`
-  width: 65px;
-  height: 31px;
+  width: 100px;
+  height: 35px;
   flex-shrink: 0;
   border-radius: 20px;
   border: 2px solid #595656;
-  opacity: 0.3;
+  opacity: 0.5;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
   text-align: center;
