@@ -127,3 +127,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+@font-face {
+  font-family: Grandstander;
+  src: url(./fonts/Grandstander-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url(./fonts/Pretendard-Regular.woff);
+}

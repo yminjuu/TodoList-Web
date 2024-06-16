@@ -113,3 +113,40 @@ export const GoJoin = styled.div`
   background: transparent;
   cursor: pointer;
 `;
+
+export const BaseContainer = styled.div`
+  border: 3px solid #fff;
+  box-shadow: 0px 4px 4px 0px rgba(81, 140, 255, 0.5);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BaseInnerContainer = styled.div`
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+`;
+
+export const Ellipse = styled.div`
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  fill: rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+  background: transparent;
+`;
+
+export const GridLayout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 20px;
+  width: auto;
+  height: auto;
+  background: transparent;
+`;
