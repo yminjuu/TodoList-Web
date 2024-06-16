@@ -45,19 +45,19 @@ export const StyledForm = styled.form`
 `;
 
 export const Logo = styled.img`
-  width: 400px;
-  height: 180px;
+  width: 320px;
+  height: 150px;
   background: transparent;
 `;
 
 export const Description = styled.div`
-  width: 500px;
-  height: 200px;
+  width: 362px;
+  height: 40px;
   flex-shrink: 0;
   color: #fff;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: Pretendard;
-  font-size: 40px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -65,8 +65,8 @@ export const Description = styled.div`
 `;
 
 export const Input = styled.input`
-  width: 20rem;
-  height: 6rem;
+  width: 10rem;
+  height: 3rem;
   flex-shrink: 0;
   border-radius: 5px;
   border: 2px solid #fff;
@@ -74,26 +74,12 @@ export const Input = styled.input`
   background: #fff;
   box-shadow: 0px 4px 4px 0px #000;
   text-align: center;
-  font-size: 30px;
-
-  &::placeholder {
-    font-size: 30px;
-    color: black;
-  }
-
-  &:hover {
-    border: 1px solid black;
-  }
-
-  &:focus {
-    color: #363636;
-    border: 1px solid red;
-  }
+  font-size: 15px;
 `;
 
 export const SubmitButton = styled.button`
-  width: 130px;
-  height: 62px;
+  width: 65px;
+  height: 31px;
   flex-shrink: 0;
   border-radius: 20px;
   border: 2px solid #595656;
@@ -102,14 +88,13 @@ export const SubmitButton = styled.button`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
   text-align: center;
   cursor: pointer;
-  font-size: 25px;
 `;
 
 export const NotMem = styled.div`
   width: auto;
   color: #909090;
   font-family: Pretendard;
-  font-size: 20px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -120,7 +105,7 @@ export const GoJoin = styled.div`
   width: auto;
   color: #000;
   font-family: Pretendard;
-  font-size: 24px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;

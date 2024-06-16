@@ -24,9 +24,8 @@ const Login = () => {
   const [pw, setPw] = useState("");
 
   const JoinWrapper = styled.form`
-    margin-top: 20px;
     width: auto;
-    min-width: 20rem;
+    min-width: 200px;
     background: transparent;
     display: flex;
     flex-direction: column;
@@ -38,7 +37,7 @@ const Login = () => {
     width: auto;
     color: #909090;
     font-family: Pretendard;
-    font-size: 20px;
+    font-size: 10px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -49,7 +48,7 @@ const Login = () => {
     width: auto;
     color: #000;
     font-family: Pretendard;
-    font-size: 24px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 800;
     line-height: normal;
