@@ -12,6 +12,14 @@ import {
 } from "../components/styledComponents";
 
 const Home = () => {
+  // 1. 달력에서 날짜 클릭하는 것 실시간으로 계속 데이터 가지고 있어야 함.
+  // 2. ADD TODO 에서 완료 버튼이 눌리면 현재 선택되어 있던 날짜와 함께 MY TODO LIST에 들어가는
+  //    데이터에 추가되어야 함.
+  // 3. MY TODO LIST에서 체크 버튼이 눌리면 최하단으로 보내야 함.
+  //    이모지 추가할 수 있도록 해야 함
+  //    수정 버튼 누르면 해당 TODO 내용이 ADD TODO로 이동, 거기서 완료 버튼 눌리면 내용 수정하여 overwrite
+  //    x 표시 누르면 list에서 삭제되어 리랜더링
+
   const LogoWrapper = styled.div`
     width: auto;
     height: auto;
