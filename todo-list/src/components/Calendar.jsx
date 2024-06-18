@@ -6,41 +6,6 @@ import { isSameMonth, isSameDay, addDays, parse } from "date-fns";
 import { useState } from "react";
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
-  const HeaderWrapper = styled.div`
-    width: 100%;
-    height: 30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background: transparent;
-    margin: 10px 0px;
-  `;
-
-  const HeaderBtn = styled.button`
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    border: none;
-    font-weight: 700;
-    padding: 0;
-
-    background-color: transparent;
-    cursor: pointer;
-    background: transparent;
-  `;
-
-  const Month = styled.div`
-    font-size: 23px;
-    font-weight: 700;
-    background: transparent;
-    font-family: Grandstander;
-    width: 120px;
-    text-align: center;
-    line-height: 30px;
-    background: transparent;
-  `;
   return (
     <HeaderWrapper>
       <HeaderBtn onClick={prevMonth}>&lt;</HeaderBtn>{" "}
@@ -55,19 +20,6 @@ const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
 };
 
 const RenderDays = () => {
-  const DaysWrapper = styled.div`
-    display: flex;
-    background: transparent;
-    height: 20px;
-  `;
-
-  const Days = styled.div`
-    width: calc(100% / 7);
-    text-align: center;
-    background: transparent;
-    font-family: Grandstander;
-  `;
-
   const days = [];
   const date = ["Sun", "Mon", "Thu", "Wed", "Thr", "Fri", "Sat"];
 
@@ -88,36 +40,6 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   const startDate = startOfWeek(monthStart);
   // 현재 월의 종료 요일
   const endDate = endOfWeek(monthEnd);
-
-  console.log(monthStart, monthEnd, startDate, endDate);
-
-  const RowWrapper = styled.div`
-    background: transparent;
-  `;
-
-  const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: 30px;
-    background: transparent;
-    align-items: center;
-    justify-content: center;
-  `;
-
-  const NotCurrMonthDate = styled.div`
-    font-family: Grandstander;
-    background: transparent;
-    font-weight: 600;
-    text-align: center;
-    color: #ababab;
-  `;
-
-  const EachDate = styled.div`
-    font-family: Grandstander;
-    background: transparent;
-    font-weight: 600;
-    text-align: center;
-  `;
 
   const rows = []; // 각 "week"를 담는 배열
   let days = []; // "week"에 담기는 날짜를 담는 배열
@@ -145,6 +67,12 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   return <RowWrapper>{rows}</RowWrapper>;
 };
 
+const CalendarWrapper = styled.div`
+  background: transparent;
+  width: 100%;
+  height: 100%;
+`;
+
 const Calendar = () => {
   // 현재 Month와 Date 관리
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -165,12 +93,6 @@ const Calendar = () => {
     setSelectedDate(day);
   };
 
-  const CalendarWrapper = styled.div`
-    background: transparent;
-    width: 100%;
-    height: 100%;
-  `;
-
   return (
     <CalendarWrapper>
       <RenderHeader
@@ -187,5 +109,86 @@ const Calendar = () => {
     </CalendarWrapper>
   );
 };
+
+// Render Header
+
+const HeaderWrapper = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  margin: 10px 0px;
+`;
+
+const HeaderBtn = styled.button`
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  font-weight: 700;
+  padding: 0;
+
+  background-color: transparent;
+  cursor: pointer;
+  background: transparent;
+`;
+
+const Month = styled.div`
+  font-size: 23px;
+  font-weight: 700;
+  background: transparent;
+  font-family: Grandstander;
+  width: 120px;
+  text-align: center;
+  line-height: 30px;
+  background: transparent;
+`;
+
+// Render Days
+const DaysWrapper = styled.div`
+  display: flex;
+  background: transparent;
+  height: 20px;
+`;
+
+const Days = styled.div`
+  width: calc(100% / 7);
+  text-align: center;
+  background: transparent;
+  font-family: Grandstander;
+`;
+
+// Render Cells
+const RowWrapper = styled.div`
+  background: transparent;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NotCurrMonthDate = styled.div`
+  font-family: Grandstander;
+  background: transparent;
+  font-weight: 600;
+  text-align: center;
+  color: #ababab;
+`;
+
+const EachDate = styled.div`
+  font-family: Grandstander;
+  background: transparent;
+  font-weight: 600;
+  text-align: center;
+`;
 
 export default Calendar;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Login.jsx & Join.jsx
 export const LoginWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
@@ -31,7 +32,7 @@ export const InputWrapper = styled.div`
   background: transparent;
   align-items: flex-end;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
 `;
 
 export const StyledForm = styled.form`
@@ -75,6 +76,17 @@ export const Input = styled.input`
   box-shadow: 0px 4px 4px 0px #000;
   text-align: center;
   font-size: 17px;
+
+  /* placeholder에 대한 속성 따로 추가 가능 */
+  &::placeholder {
+    font-size: 17px;
+  }
+
+  &:focus {
+    opacity: 1;
+    border: 2px solid #fff;
+    outline: none;
+  }
 `;
 
 export const SubmitButton = styled.button`
@@ -88,6 +100,11 @@ export const SubmitButton = styled.button`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
   text-align: center;
   cursor: pointer;
+
+  &:hover {
+    background-color: white;
+    opacity: 1;
+  }
 `;
 
 export const NotMem = styled.div`
@@ -113,6 +130,8 @@ export const GoJoin = styled.div`
   background: transparent;
   cursor: pointer;
 `;
+
+// Home.jsx
 
 export const BaseContainer = styled.div`
   border: 3px solid #fff;

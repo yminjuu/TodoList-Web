@@ -23,39 +23,10 @@ const Login = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  const JoinWrapper = styled.form`
-    width: auto;
-    min-width: 15rem;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  `;
-
-  const NotMem = styled.div`
-    width: auto;
-    color: #909090;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    background: transparent;
-  `;
-
-  const GoJoin = styled.div`
-    width: auto;
-    color: #000;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    text-decoration-line: underline;
-    background: transparent;
-    cursor: pointer;
-  `;
+  const checkValidJoin = () => {
+    if (id && pw) return true;
+    else return false;
+  };
 
   return (
     <LoginWrapper>
@@ -88,7 +59,10 @@ const Login = () => {
             type="submit"
             onClick={(e) => {
               e.preventDefault(); //폼 제출을 방지한다
-              navigate(`/home/:${id}`);
+              console.log(id + pw);
+              checkValidJoin()
+                ? navigate(`/home/:${id}`)
+                : window.alert("id와 pw를 기입해주세요");
             }}
           >
             로그인
@@ -108,5 +82,39 @@ const Login = () => {
     </LoginWrapper>
   );
 };
+
+const JoinWrapper = styled.form`
+  width: auto;
+  min-width: 15rem;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+`;
+
+const NotMem = styled.div`
+  width: auto;
+  color: #909090;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: transparent;
+`;
+
+const GoJoin = styled.div`
+  width: auto;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-decoration-line: underline;
+  background: transparent;
+  cursor: pointer;
+`;
 
 export default Login;

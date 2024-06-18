@@ -21,35 +21,6 @@ const Join = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  const CustomSubmitButton = styled(OrgSubmitButton)`
-    width: 80px;
-    height: 45px;
-  `;
-
-  const ButtonWrapper = styled.div`
-    width: auto;
-    min-width: 15rem;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  `;
-
-  const LoginButton = styled.button`
-    width: 150px;
-    height: 40px;
-    border-radius: 0.9375rem;
-    border: 2px solid #fff;
-    opacity: 0.5;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    background: transparent;
-    color: #333333;
-    font-weight: 700;
-  `;
-
   return (
     <LoginWrapper>
       <LogoWrapper>
@@ -94,12 +65,46 @@ const Join = () => {
               navigate(`/login`);
             }}
           >
-            입력 완료
+            회원가입 완료
           </CustomSubmitButton>
         </StyledForm>
       </InputWrapper>
     </LoginWrapper>
   );
 };
+
+const CustomSubmitButton = styled(OrgSubmitButton)`
+  width: 120px;
+  height: 45px;
+`;
+
+const ButtonWrapper = styled.div`
+  width: auto;
+  min-width: 15rem;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
+const LoginButton = styled.button`
+  width: 150px;
+  height: 40px;
+  border-radius: 0.9375rem;
+  border: 2px solid #fff;
+  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  background: transparent;
+  color: #333333;
+  font-weight: 700;
+
+  &:hover {
+    opacity: 1;
+    background-color: white;
+  }
+`;
 
 export default Join;
