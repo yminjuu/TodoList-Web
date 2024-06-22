@@ -29,7 +29,7 @@ const RenderDays = () => {
   return <DaysWrapper>{days}</DaysWrapper>;
 };
 
-const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
+const RenderCells = ({ currentMonth, dateClicked }) => {
   // date-fns의 메서드 사용
 
   // 현재 월의 시작 날짜 : Jun01
@@ -49,8 +49,19 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
+      const cloneDay = day;
+
       if (isSameMonth(day, monthStart)) {
-        days.push(<EachDate key={day}>{formattedDate}</EachDate>);
+        days.push(
+          <EachDate
+            onClick={() => {
+              dateClicked(cloneDay);
+            }}
+            key={day}
+          >
+            {formattedDate}
+          </EachDate>
+        );
       } else {
         days.push(
           <NotCurrMonthDate key={day}>{formattedDate}</NotCurrMonthDate>
@@ -73,10 +84,9 @@ const CalendarWrapper = styled.div`
   height: 100%;
 `;
 
-const Calendar = () => {
+const Calendar = ({ dateClicked }) => {
   // 현재 Month와 Date 관리
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   // 이전 달 관리
   const prevMonth = () => {
@@ -88,11 +98,6 @@ const Calendar = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  // 버튼 클릭시 callback 함수
-  const onDateClick = (day) => {
-    setSelectedDate(day);
-  };
-
   return (
     <CalendarWrapper>
       <RenderHeader
@@ -101,11 +106,7 @@ const Calendar = () => {
         nextMonth={nextMonth}
       />
       <RenderDays />
-      <RenderCells
-        currentMonth={currentMonth}
-        selectedDate={selectedDate}
-        onDateClick={onDateClick}
-      />
+      <RenderCells currentMonth={currentMonth} dateClicked={dateClicked} />
     </CalendarWrapper>
   );
 };
@@ -176,19 +177,34 @@ const Row = styled.div`
   justify-content: center;
 `;
 
-const NotCurrMonthDate = styled.div`
+const NotCurrMonthDate = styled.button`
   font-family: Grandstander;
   background: transparent;
   font-weight: 600;
   text-align: center;
   color: #ababab;
+  border: none;
 `;
 
-const EachDate = styled.div`
+const EachDate = styled.button`
   font-family: Grandstander;
   background: transparent;
   font-weight: 600;
   text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    background: fixed;
+    background-color: rgba(58, 184, 255, 0.5);
+    border: 1.5px solid rgba(58, 184, 255, 0.5);
+  }
+
+  &:focus {
+    border: 1.5px solid rgba(58, 184, 255, 0.5);
+    border-radius: 5px;
+  }
 `;
 
 export default Calendar;

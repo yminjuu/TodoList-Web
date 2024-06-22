@@ -5,17 +5,95 @@ import TodoItem from "../components/TodoItem";
 import Calendar from "../components/Calendar";
 import TodoList_Section from "../components/TodoList_Section";
 import AddTodo_Section from "../components/AddTodo_Section";
+import axios from "axios";
 
 import {
   BaseContainer,
   BaseInnerContainer,
   GridLayout,
 } from "../styles/styledComponents";
+import { useState } from "react";
+import { useEffect } from "react";
+
+// Home에서 GET을 통해 모든 TODO 데이터를 불러오고, id에 따라 알맞게 데이터를 가져옴
 
 const Home = () => {
+  const [todoData, setTodoData] = useState("");
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  // Calendar에서 현재 선택된 날짜 관리
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const { id } = useParams();
+
+  // Calendar에서 클릭된 날짜 관리
+  const dateClicked = (day) => {
+    setSelectedDate(day);
+  };
+
+  const dummyData = [
+    {
+      todo_id: 7,
+      user: "걸어봐위엄라이커라이온",
+      date: "2024-06-17T17:00:00.123456+09:00",
+      content: "멋사와 함께 행복 개발하기",
+      is_checked: false,
+      emoji: "",
+    },
+    {
+      todo_id: 8,
+      user: "걸어봐위엄라이커라이온",
+      date: "2024-06-16T11:30:15.123456+09:00",
+      content: "투두리스트 API 개발 끝내기",
+      is_checked: false,
+      emoji: "",
+    },
+    {
+      todo_id: 9,
+      user: "걸어봐위엄라이커라이온",
+      date: "2024-06-20T15:15:15.123456+09:00",
+      content: "건강하기",
+      is_checked: false,
+      emoji: "",
+    },
+    {
+      todo_id: 10,
+      user: "걸어봐위엄라이커라이온",
+      date: "2024-06-20T15:15:15.123456+09:00",
+      content: "건강하기",
+      is_checked: true,
+      emoji: "",
+    },
+    {
+      todo_id: 11,
+      user: "걸어봐위엄라이커라이온",
+      date: "2024-06-20T15:15:15.123456+09:00",
+      content: "건강하기",
+      is_checked: false,
+      emoji: "",
+    },
+  ];
+
+  useEffect(() => {
+    getData();
+  }, []);
   console.log(id);
   //사용자 id 출력
+
+  const tmpId = "걸어봐위엄라이커라이온";
+  const month = 6;
+  const day = 17;
+
+  const getData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/api/todos/${tmpId}?month=${month}&day=${day}`
+      );
+      setTodoData(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -26,7 +104,7 @@ const Home = () => {
         <GridLayout>
           <CalendarContainer>
             <CalendarInnerContainer>
-              <Calendar></Calendar>
+              <Calendar dateClicked={dateClicked}></Calendar>
             </CalendarInnerContainer>
           </CalendarContainer>
           <TODOContainer>
