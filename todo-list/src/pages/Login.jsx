@@ -13,7 +13,7 @@ import {
   Description,
   Input,
   SubmitButton,
-} from "../components/styledComponents";
+} from "../styles/styledComponents";
 
 const Login = () => {
   // 특정 action이 발생했을 때 어떤 주소로 이동할 수 있게 해준다.

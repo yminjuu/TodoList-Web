@@ -151,6 +151,22 @@ export const BaseInnerContainer = styled.div`
   justify-content: left;
 `;
 
+export const ContainerTitle = styled.div`
+  margin-left: 30px;
+  margin-top: 5px;
+  width: 100%;
+  padding: 5px;
+  height: auto;
+  color: #000;
+  text-align: left;
+  font-family: Grandstander;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  background: transparent;
+`;
+
 export const Ellipse = styled.div`
   width: 10px;
   height: 10px;

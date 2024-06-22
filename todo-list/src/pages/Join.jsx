@@ -11,8 +11,8 @@ import {
   Logo,
   Description,
   Input,
-} from "../components/styledComponents";
-import { SubmitButton as OrgSubmitButton } from "../components/styledComponents";
+} from "../styles/styledComponents";
+import { SubmitButton as OrgSubmitButton } from "../styles/styledComponents";
 
 const Join = () => {
   // 특정 action이 발생했을 때 어떤 주소로 이동할 수 있게 해준다.
