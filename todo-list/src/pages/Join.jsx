@@ -13,13 +13,30 @@ import {
   Input,
 } from "../styles/styledComponents";
 import { SubmitButton as OrgSubmitButton } from "../styles/styledComponents";
+import axios from "axios";
 
 const Join = () => {
   // 특정 action이 발생했을 때 어떤 주소로 이동할 수 있게 해준다.
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+
+  const postRegister = () => {
+    try {
+      axios
+        .post(`${BASE_URL}/api/users/register`, {
+          username: id,
+          password: pw,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <LoginWrapper>
@@ -62,6 +79,7 @@ const Join = () => {
             onClick={(e) => {
               e.preventDefault(); //폼 제출을 방지한다
               // 회원가입 -> db 관리 필요
+              postRegister();
               navigate(`/login`);
             }}
           >

@@ -212,6 +212,16 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
+"@emoji-mart/data@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@emoji-mart/data/-/data-1.2.1.tgz"
+  integrity sha512-no2pQMWiBy6gpBEiqGeU77/bFejDqUTRY7KX+0+iur13op3bqUsXdnwoZs6Xb1zbv0gAj5VvS1PWoUUckSr5Dw==
+
+"@emoji-mart/react@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/@emoji-mart/react/-/react-1.1.1.tgz"
+  integrity sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==
+
 "@emotion/is-prop-valid@1.2.2":
   version "1.2.2"
   resolved "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz"
@@ -398,7 +408,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.66":
+"@types/react@*", "@types/react@^18.2.66", "@types/react@>=0.14.0":
   version "18.3.3"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.3.3.tgz"
   integrity sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==
@@ -800,6 +810,18 @@ electron-to-chromium@^1.4.796:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.803.tgz"
   integrity sha512-61H9mLzGOCLLVsnLiRzCbc63uldP0AniRYPV3hbGVtONA1pI7qSGILdbofR7A8TMbOypDocEAjH/e+9k1QIe3g==
 
+emoji-mart@^5.2, emoji-mart@5.6.0:
+  version "5.6.0"
+  resolved "https://registry.npmjs.org/emoji-mart/-/emoji-mart-5.6.0.tgz"
+  integrity sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==
+
+emoji-picker-react@^4.10.0:
+  version "4.10.0"
+  resolved "https://registry.npmjs.org/emoji-picker-react/-/emoji-picker-react-4.10.0.tgz"
+  integrity sha512-EfvOsGbyweMNcJ1F99XUv+XPdfkpa2NRAYkhwdIeYS6DWeISu3kHWX+iwvFLUVAc533aWbsGpETbxwbhzsiMnw==
+  dependencies:
+    flairup "0.0.39"
+
 es-abstract@^1.22.1, es-abstract@^1.22.3, es-abstract@^1.23.0, es-abstract@^1.23.1, es-abstract@^1.23.2, es-abstract@^1.23.3:
   version "1.23.3"
   resolved "https://registry.npmjs.org/es-abstract/-/es-abstract-1.23.3.tgz"
@@ -1120,6 +1142,11 @@ find-up@^5.0.0:
   dependencies:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
+
+flairup@0.0.39:
+  version "0.0.39"
+  resolved "https://registry.npmjs.org/flairup/-/flairup-0.0.39.tgz"
+  integrity sha512-UVPkzZmZeBWBx1+Ovo++kYKk9Wi32Jxt+c7HsxnEY80ExwFV54w+NyquFziqMLS0BnGVE43yGD4OvIwaAm/WiQ==
 
 flat-cache@^3.0.4:
   version "3.2.0"
@@ -1836,13 +1863,30 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.8:
+react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.8, react-dom@>=17.0.x:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
+
+react-easy-emoji@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.npmjs.org/react-easy-emoji/-/react-easy-emoji-1.8.1.tgz"
+  integrity sha512-wAf2x+cjwtOlLfXnjc0J3k5B2PDZdoxd1BjtfKr5tq2AL7t2ygvByJQWgFOyN28xg3qe8EKBM6pKxGP+qrGWuQ==
+  dependencies:
+    string-replace-to-array "^2.1.0"
+
+react-input-emoji@^5.9.0:
+  version "5.9.0"
+  resolved "https://registry.npmjs.org/react-input-emoji/-/react-input-emoji-5.9.0.tgz"
+  integrity sha512-37Bbg4DEI4UXQ/tNSG3shIA0iFqk3vkhvfTZSQxi/oweeB/870G/6lvp65Ebex2rNM+UlwjMmR80rlJQwl78lQ==
+  dependencies:
+    "@emoji-mart/data" "1.2.1"
+    "@emoji-mart/react" "1.1.1"
+    emoji-mart "5.6.0"
+    react-easy-emoji "^1.8.1"
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -1869,7 +1913,7 @@ react-router@6.23.1:
   dependencies:
     "@remix-run/router" "1.16.1"
 
-react@^18.2.0, react@^18.3.1, "react@>= 16.8.0", react@>=16.8:
+"react@^16.8 || ^17 || ^18", react@^18.2.0, react@^18.3.1, "react@>= 16.8.0", react@>=0.14.27, react@>=16, react@>=16.8, react@>=17.0.x:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -2041,6 +2085,11 @@ source-map-js@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.0.tgz"
   integrity sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==
+
+string-replace-to-array@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/string-replace-to-array/-/string-replace-to-array-2.1.1.tgz"
+  integrity sha512-i31csTEoIrcB8pusAF72Z0WsF04sbdiH4s0egpcmFj30SgHYdYd1swmZ7Zb1qFryJ5DbZR6z4rSjOzoUcrWUWw==
 
 string.prototype.matchall@^4.0.11:
   version "4.0.11"

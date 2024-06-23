@@ -19,6 +19,7 @@ import { useReducer } from "react";
 // Home에서 GET을 통해 모든 TODO 데이터를 불러오고, id에 따라 알맞게 데이터를 가져옴
 
 const reducer = (state, action) => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   let newState = [];
 
   switch (action.type) {
@@ -26,17 +27,50 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "REMOVE": {
+      console.log("삭제");
+      try {
+        axios.delete(
+          `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`
+        );
+      } catch (error) {
+        console.log(error);
+      }
       newState = state.filter(
-        (it) => String(it.todo_id) !== String(action.targetId)
+        (it) => String(it.todo_id) !== String(action.data.targetId)
       );
       break;
     }
     case "CREATE": {
       const newItem = { ...action.data };
       newState = [newItem, ...state];
+      try {
+        axios
+          .post(`${BASE_URL}/api/todos/${action.data.userId}`, {
+            date: action.data.date,
+            content: action.data.content,
+          })
+          .then((res) => {});
+      } catch (error) {
+        console.log(error);
+      }
       break;
     }
     case "EDIT": {
+      try {
+        axios
+          .put(
+            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`,
+            {
+              date: action.data.date,
+              content: action.data.content,
+            }
+          )
+          .then((res) => {
+            console.log(res);
+          });
+      } catch (error) {
+        console.log(error);
+      }
       newState = state.map((it) =>
         it.todo_id === action.data.targetId ? { ...action.data } : it
       );
@@ -59,50 +93,7 @@ export const TodoListDispatchContext = React.createContext();
 export const SelectedDateContext = React.createContext();
 
 const Home = () => {
-  const dummyData = [
-    {
-      todo_id: 7,
-      user: "걸어봐위엄라이커라이온",
-      date: "2024-06-17T17:00:00.123456+09:00",
-      content: "멋사와 함께 행복 개발하기",
-      is_checked: false,
-      emoji: "",
-    },
-    {
-      todo_id: 8,
-      user: "걸어봐위엄라이커라이온",
-      date: "2024-06-16T11:30:15.123456+09:00",
-      content: "투두리스트 API 개발 끝내기",
-      is_checked: false,
-      emoji: "",
-    },
-    {
-      todo_id: 9,
-      user: "걸어봐위엄라이커라이온",
-      date: "2024-06-20T15:15:15.123456+09:00",
-      content: "건강하기",
-      is_checked: false,
-      emoji: "",
-    },
-    {
-      todo_id: 10,
-      user: "걸어봐위엄라이커라이온",
-      date: "2024-06-20T15:15:15.123456+09:00",
-      content: "건강하기",
-      is_checked: true,
-      emoji: "",
-    },
-    {
-      todo_id: 11,
-      user: "걸어봐위엄라이커라이온",
-      date: "2024-06-20T15:15:15.123456+09:00",
-      content: "건강하기",
-      is_checked: false,
-      emoji: "",
-    },
-  ];
-
-  const [todoData, dispatch] = useReducer(reducer, dummyData);
+  const [todoData, dispatch] = useReducer(reducer, []);
 
   const [editDataId, setEditDataId] = useState("");
   const [isEdit, toggleIsEdit] = useState(false);
@@ -119,24 +110,20 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // getData(); API로 데이터 가져오기
-  }, []);
-  //사용자 id 출력
-
-  useEffect(() => {
-    console.log("TodoData updated:", todoData);
-  }, [todoData]);
-
-  const tmpId = "걸어봐위엄라이커라이온";
-  const month = 6;
-  const day = 17;
+    getData(); //API로 데이터 가져오기
+  }, [selectedDate]);
 
   const getData = async () => {
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/api/todos/${tmpId}?month=${month}&day=${day}`
+        `${BASE_URL}/api/todos/${id}?month=${
+          selectedDate.getMonth() + 1
+        }&day=${selectedDate.getDate()}`
       );
-      setTodoData(data);
+      dispatch({
+        type: "INIT",
+        data,
+      });
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -144,15 +131,13 @@ const Home = () => {
   };
 
   //data state 관리
-  const onCreate = ({ date, content, is_checked, emoji }) => {
-    console.log("content: ", content);
+  const onCreate = ({ date, content }) => {
     dispatch({
       type: "CREATE",
       data: {
+        userId: id,
         date: date,
         content: content,
-        is_checked,
-        emoji,
       },
     });
   };
@@ -160,7 +145,7 @@ const Home = () => {
   const onRemove = (targetId) => {
     dispatch({
       type: "REMOVE",
-      targetId,
+      data: { userId: id, targetId },
     });
   };
 
@@ -168,6 +153,7 @@ const Home = () => {
     dispatch({
       type: "EDIT",
       data: {
+        userId: id,
         targetId,
         date,
         content,
@@ -183,6 +169,7 @@ const Home = () => {
     dispatch({
       type: "CHECK",
       data: {
+        id,
         targetId,
         is_checked,
       },
@@ -193,6 +180,7 @@ const Home = () => {
     dispatch({
       type: "CHECK",
       data: {
+        id,
         targetId,
         emoji,
       },

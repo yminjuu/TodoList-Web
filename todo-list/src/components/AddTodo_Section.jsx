@@ -36,14 +36,17 @@ const AddTodo_Section = ({ isEdit, editDataId }) => {
     }
     if (isEdit == false) {
       if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
-        onCreate({ selectedDate, content, is_checked: false, emoji: "NULL" });
+        onCreate({
+          date: selectedDate,
+          content,
+        });
         setContent("");
       }
     } else {
       if (window.confirm("일기를 수정하시겠습니까?")) {
         onEdit({
           targetId: editDataId,
-          selectedDate,
+          date: selectedDate,
           content,
           is_checked: false,
           emoji: "NULL",

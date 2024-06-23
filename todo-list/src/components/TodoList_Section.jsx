@@ -12,8 +12,9 @@ import {
   TodoListDispatchContext,
   TodoListStateContext,
 } from "../pages/Home";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { isSameDay } from "date-fns";
+import InputEmoji from "react-input-emoji";
 
 const TodoList_Section = ({ setEditContent }) => {
   const data = useContext(TodoListStateContext);
@@ -52,8 +53,6 @@ const TodoList_Section = ({ setEditContent }) => {
     <ListInnerContainer>
       <ContainerTitle>MY TODO LIST</ContainerTitle>
       <TodoListWrapper>
-        {/* 실제 db에서 데이터 가져와야 함: TODO LIST */}
-        {}
         {getProcessedTodoList().map((it) => (
           <TodoItem
             {...it}

@@ -2,23 +2,18 @@ import React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import InputEmoji from "react-input-emoji";
+import EmojiPicker from "emoji-picker-react";
 
-const TodoItem = ({
-  date,
-  todo_id,
-  content,
-  is_checked,
-  emoji,
-  onEditButton,
-}) => {
+const TodoItem = ({ date, todo_id, content, is_checked, onEditButton }) => {
   const onRemove = useContext(TodoListDispatchContext).onRemove;
 
   const handleRemove = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       // 현재 item에 대한 id를 가져오는 로직 필요
       // 현재는 tmp id에 대한 삭제 구현
-      onRemove(8);
+      onRemove(todo_id);
     }
   };
 
@@ -26,12 +21,37 @@ const TodoItem = ({
     onEditButton({ todo_id });
   };
 
+  const [emoji, setEmoji] = useState("");
+
+  function handleOnEnter(text) {
+    console.log("enter", text);
+  }
+
+  const onEmojiClick = () => {
+    console.log("이모지 클릭");
+  };
+
   return (
     <ItemWrapper>
       <CheckButton type="checkbox"></CheckButton>
       <ContentWrapper>
         <TodoContent>{content}</TodoContent>
-        <Emoji src="../public/emoji.png" alt="emoji"></Emoji>
+        {/* <Emoji src="../public/emoji.png" alt="emoji"></Emoji> */}
+        <EmojiWrapper>
+          {/* <InputEmoji
+            value={emoji}
+            onChange={setEmoji}
+            cleanOnEnter
+            onEnter={handleOnEnter}
+            placeholder="Type a message"
+            height={20}
+          ></InputEmoji> */}
+          <EmojiPicker
+            height={25}
+            width={25}
+            onEmojiClick={onEmojiClick}
+          ></EmojiPicker>
+        </EmojiWrapper>
       </ContentWrapper>
       <ButtonWrapper>
         <ReviseBtn
@@ -92,6 +112,17 @@ const CheckButton = styled.input`
   background: transparent;
 `;
 
+const EmojiWrapper = styled.div`
+  width: 23.148px;
+  height: 24.038px;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TodoContent = styled.div`
   color: #000;
   font-family: Grandstander;
@@ -102,14 +133,6 @@ const TodoContent = styled.div`
   width: auto;
   height: 100%;
   text-align: center;
-`;
-
-const Emoji = styled.img`
-  width: 23.148px;
-  height: 24.038px;
-  flex-shrink: 0;
-  cursor: pointer;
-  background: transparent;
 `;
 
 const ReviseBtn = styled.img`
