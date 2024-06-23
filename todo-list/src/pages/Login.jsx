@@ -13,7 +13,8 @@ import {
   Description,
   Input,
   SubmitButton,
-} from "../components/styledComponents";
+} from "../styles/styledComponents";
+import axios from "axios";
 
 const Login = () => {
   // 특정 action이 발생했을 때 어떤 주소로 이동할 수 있게 해준다.
@@ -23,39 +24,37 @@ const Login = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
-  const JoinWrapper = styled.form`
-    width: auto;
-    min-width: 15rem;
-    background: transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  `;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  const NotMem = styled.div`
-    width: auto;
-    color: #909090;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    background: transparent;
-  `;
+  const postLogin = async () => {
+    try {
+      const res = await axios.post(`${BASE_URL}/api/users/login`, {
+        username: id,
+        password: pw,
+      });
 
-  const GoJoin = styled.div`
-    width: auto;
-    color: #000;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    text-decoration-line: underline;
-    background: transparent;
-    cursor: pointer;
-  `;
+      if (res.status === 200) {
+        console.log(res.data);
+        navigate(`/home/${res.data.user_id}`);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("존재하지 않는 유저 정보입니다.");
+      } else {
+        alert("로그인 중 문제가 발생했습니다.");
+      }
+      console.log(error);
+    }
+  };
+
+  const checkValidJoin = () => {
+    if (id && pw) {
+      return true;
+    } else {
+      if (!id) alert("ID를 입력하세요");
+      if (!pw) alert("비밀번호를 입력하세요");
+    }
+  };
 
   return (
     <LoginWrapper>
@@ -88,7 +87,7 @@ const Login = () => {
             type="submit"
             onClick={(e) => {
               e.preventDefault(); //폼 제출을 방지한다
-              navigate(`/home/:${id}`);
+              if (checkValidJoin()) postLogin();
             }}
           >
             로그인
@@ -108,5 +107,39 @@ const Login = () => {
     </LoginWrapper>
   );
 };
+
+const JoinWrapper = styled.form`
+  width: auto;
+  min-width: 15rem;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+`;
+
+const NotMem = styled.div`
+  width: auto;
+  color: #909090;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: transparent;
+`;
+
+const GoJoin = styled.div`
+  width: auto;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-decoration-line: underline;
+  background: transparent;
+  cursor: pointer;
+`;
 
 export default Login;

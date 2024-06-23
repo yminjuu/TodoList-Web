@@ -131,9 +131,11 @@ table {
 @font-face {
   font-family: Grandstander;
   src: url(./fonts/Grandstander-VariableFont_wght.ttf);
+  font-display: block;
 }
 
 @font-face {
   font-family: Pretendard;
   src: url(./fonts/Pretendard-Regular.woff);
+  font-display: block;
 }
