@@ -29,7 +29,7 @@ const RenderDays = () => {
   return <DaysWrapper>{days}</DaysWrapper>;
 };
 
-const RenderCells = ({ currentMonth, dateClicked }) => {
+const RenderCells = ({ currentMonth, dateClicked, selectedDate }) => {
   // date-fns의 메서드 사용
 
   // 현재 월의 시작 날짜 : Jun01
@@ -53,14 +53,18 @@ const RenderCells = ({ currentMonth, dateClicked }) => {
 
       if (isSameMonth(day, monthStart)) {
         days.push(
-          <EachDate
-            onClick={() => {
-              dateClicked(cloneDay);
-            }}
-            key={day}
-          >
-            {formattedDate}
-          </EachDate>
+          isSameDay(day, selectedDate) ? (
+            <SelectedDate key={day}>{formattedDate}</SelectedDate>
+          ) : (
+            <EachDate
+              onClick={() => {
+                dateClicked(cloneDay);
+              }}
+              key={day}
+            >
+              {formattedDate}
+            </EachDate>
+          )
         );
       } else {
         days.push(
@@ -84,7 +88,7 @@ const CalendarWrapper = styled.div`
   height: 100%;
 `;
 
-const Calendar = ({ dateClicked }) => {
+const Calendar = ({ selectedDate, dateClicked }) => {
   // 현재 Month와 Date 관리
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -106,7 +110,11 @@ const Calendar = ({ dateClicked }) => {
         nextMonth={nextMonth}
       />
       <RenderDays />
-      <RenderCells currentMonth={currentMonth} dateClicked={dateClicked} />
+      <RenderCells
+        currentMonth={currentMonth}
+        dateClicked={dateClicked}
+        selectedDate={selectedDate}
+      />
     </CalendarWrapper>
   );
 };
@@ -205,6 +213,18 @@ const EachDate = styled.button`
     border: 1.5px solid rgba(58, 184, 255, 0.5);
     border-radius: 5px;
   }
+`;
+
+const SelectedDate = styled.button`
+  font-family: Grandstander;
+  background: fixed;
+  background-color: rgba(58, 184, 255, 0.5);
+  border: 1.5px solid rgba(58, 184, 255, 0.5);
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
 `;
 
 export default Calendar;

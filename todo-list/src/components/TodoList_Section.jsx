@@ -8,12 +8,14 @@ import {
   ContainerTitle,
 } from "../styles/styledComponents";
 
+// 필요한 props: TODO LIST전체
 const TodoList_Section = () => {
   return (
     <ListInnerContainer>
       <ContainerTitle>MY TODO LIST</ContainerTitle>
       <TodoListWrapper>
         {/* 실제 db에서 데이터 가져와야 함: TODO LIST */}
+        {}
         <TodoItem
           id={0}
           isChecked={true}

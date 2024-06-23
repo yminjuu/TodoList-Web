@@ -6,14 +6,47 @@ import {
   GridLayout,
   ContainerTitle,
 } from "../styles/styledComponents";
+import { useContext } from "react";
+import { TodoListDispatchContext } from "../pages/Home";
+import { useRef, useState } from "react";
 
-const AddTodo_Section = () => {
+const AddTodo_Section = ({ selectedDate }) => {
+  const onEdit = useContext(TodoListDispatchContext).onEdit;
+  const onCreate = useContext(TodoListDispatchContext).onCreate;
+
+  const [content, setContent] = useState("");
+
+  const contentInput = useRef();
+
+  // TODO 수정 : onEdit 사용
+
+  // 새로운 TODO 추가 : onCreate 사용
+  // 필요한 것: 현재 선택된 date, content, isChecked, emoji
+  const addTodo = () => {
+    if (content.length < 1) {
+      contentInput.current.focus();
+      return;
+    }
+    if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
+      onCreate(selectedDate, content, false, "NULL");
+      setContent("");
+    }
+  };
+
   return (
     <TODOInnerContainer>
       <ContainerTitle>ADD TODO</ContainerTitle>
-      <TODOInput placeholder="할 일을 추가하세요."></TODOInput>
+      <TODOInput
+        placeholder="할 일을 추가하세요."
+        ref={contentInput}
+        value={content}
+        onChange={(e) => {
+          contentInput.current.focus();
+          setContent(e.target.value);
+        }}
+      ></TODOInput>
       <ButtonWrapper>
-        <AddButton>
+        <AddButton onClick={addTodo}>
           <AddButtonImg src="../public/Done.png"></AddButtonImg>
         </AddButton>
       </ButtonWrapper>
@@ -59,11 +92,11 @@ const ButtonWrapper = styled.div`
 `;
 
 const AddButton = styled.div`
+  cursor: pointer;
   border-radius: 10px;
   border: 1px solid #7c7c7c;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
   width: 35px;
   height: 27px;
   flex-shrink: 0;

@@ -14,22 +14,48 @@ import {
 } from "../styles/styledComponents";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useReducer } from "react";
 
 // Home에서 GET을 통해 모든 TODO 데이터를 불러오고, id에 따라 알맞게 데이터를 가져옴
 
+const reducer = (state, action) => {
+  let newState = [];
+
+  switch (action.type) {
+    case "INIT": {
+      return action.data;
+    }
+    case "REMOVE": {
+      newState = state.filter((it) => it.id !== action.targetId);
+      break;
+    }
+    case "CREATE": {
+      const newItem = { ...action.data };
+      newState = [newItem, ...state];
+      break;
+    }
+    case "EDIT": {
+      newState = state.map((it) =>
+        it.id === action.data.id ? { ...action.data } : it
+      );
+      break;
+    }
+    case "CHECK": {
+      console.log("check 상태 변화");
+    }
+    case "EMOJI": {
+      console.log("이모지 변화");
+    }
+    default:
+      return state;
+  }
+  return newState;
+};
+
+export const TodoListStateContext = React.createContext();
+export const TodoListDispatchContext = React.createContext();
+
 const Home = () => {
-  const [todoData, setTodoData] = useState("");
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-  // Calendar에서 현재 선택된 날짜 관리
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const { id } = useParams();
-
-  // Calendar에서 클릭된 날짜 관리
-  const dateClicked = (day) => {
-    setSelectedDate(day);
-  };
-
   const dummyData = [
     {
       todo_id: 7,
@@ -73,10 +99,22 @@ const Home = () => {
     },
   ];
 
+  const [todoData, dispatch] = useReducer(reducer, dummyData);
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  // Calendar에서 현재 선택된 날짜 관리
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { id } = useParams();
+
+  // Calendar에서 클릭된 날짜 관리
+  const dateClicked = (day) => {
+    setSelectedDate(day);
+  };
+
   useEffect(() => {
-    getData();
+    // getData(); API로 데이터 가져오기
   }, []);
-  console.log(id);
   //사용자 id 출력
 
   const tmpId = "걸어봐위엄라이커라이온";
@@ -95,27 +133,89 @@ const Home = () => {
     }
   };
 
+  //data state 관리
+  const onCreate = ({ date, content, is_checked, emoji }) => {
+    console.log("onCreate");
+    dispatch({
+      type: "CREATE",
+      data: {
+        date: date,
+        content,
+        is_checked,
+        emoji,
+      },
+    });
+  };
+
+  const onRemove = (targetId) => {
+    dispatch({
+      type: "REMOVE",
+      targetId,
+    });
+  };
+
+  const onEdit = (date, content, is_checked, emoji) => {
+    dispatch({
+      type: "EDIT",
+      data: {
+        date: date,
+        content,
+        is_checked,
+        emoji,
+      },
+    });
+  };
+
+  const onCheck = (targetId, is_checked) => {
+    dispatch({
+      type: "CHECK",
+      data: {
+        targetId,
+        is_checked,
+      },
+    });
+  };
+
+  const onEmojiAdd = (targetId, emoji) => {
+    dispatch({
+      type: "CHECK",
+      data: {
+        targetId,
+        emoji,
+      },
+    });
+  };
+
   return (
-    <div>
-      <LogoWrapper>
-        <Logo src="../public/logo/logo.png" alt="logo"></Logo>
-      </LogoWrapper>
-      <ContentWrapper>
-        <GridLayout>
-          <CalendarContainer>
-            <CalendarInnerContainer>
-              <Calendar dateClicked={dateClicked}></Calendar>
-            </CalendarInnerContainer>
-          </CalendarContainer>
-          <TODOContainer>
-            <AddTodo_Section></AddTodo_Section>
-          </TODOContainer>
-          <ListContainer>
-            <TodoList_Section></TodoList_Section>
-          </ListContainer>
-        </GridLayout>
-      </ContentWrapper>
-    </div>
+    <TodoListStateContext.Provider value={todoData}>
+      <TodoListDispatchContext.Provider
+        value={{ onCreate, onRemove, onEdit, onCheck, onEmojiAdd }}
+      >
+        <div>
+          <LogoWrapper>
+            <Logo src="../public/logo/logo.png" alt="logo"></Logo>
+          </LogoWrapper>
+          <ContentWrapper>
+            <GridLayout>
+              <CalendarContainer>
+                <CalendarInnerContainer>
+                  <Calendar
+                    selectedDate={selectedDate}
+                    dateClicked={dateClicked}
+                  ></Calendar>
+                </CalendarInnerContainer>
+              </CalendarContainer>
+              <TODOContainer>
+                <AddTodo_Section selectedDate={selectedDate}></AddTodo_Section>
+              </TODOContainer>
+              <ListContainer>
+                <TodoList_Section></TodoList_Section>
+              </ListContainer>
+            </GridLayout>
+          </ContentWrapper>
+        </div>
+      </TodoListDispatchContext.Provider>
+    </TodoListStateContext.Provider>
   );
 };
 
