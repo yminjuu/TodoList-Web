@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Join from "./Join";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useRef } from "react";
 import {
   LoginWrapper,
   LogoWrapper,
@@ -26,6 +25,7 @@ const Login = () => {
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+  // 로그인 버튼을 누르는 경우
   const postLogin = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/api/users/login`, {

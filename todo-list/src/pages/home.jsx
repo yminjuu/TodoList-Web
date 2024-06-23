@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import TodoItem from "../components/TodoItem";
 import Calendar from "../components/Calendar";
 import TodoList_Section from "../components/TodoList_Section";
 import AddTodo_Section from "../components/AddTodo_Section";
@@ -27,7 +26,6 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "REMOVE": {
-      console.log("삭제");
       try {
         axios.delete(
           `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`
@@ -76,12 +74,6 @@ const reducer = (state, action) => {
       );
       break;
     }
-    case "CHECK": {
-      console.log("check 상태 변화");
-    }
-    case "EMOJI": {
-      console.log("이모지 변화");
-    }
     default:
       return state;
   }
@@ -93,21 +85,18 @@ export const TodoListDispatchContext = React.createContext();
 export const SelectedDateContext = React.createContext();
 
 const Home = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  // todoData 전체 관리
   const [todoData, dispatch] = useReducer(reducer, []);
 
+  // edit을 누른 data의 id 관리
   const [editDataId, setEditDataId] = useState("");
   const [isEdit, toggleIsEdit] = useState(false);
-
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   // Calendar에서 현재 선택된 날짜 관리
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { id } = useParams();
-
-  // Calendar에서 클릭된 날짜 관리
-  const dateClicked = (day) => {
-    setSelectedDate(day);
-  };
 
   useEffect(() => {
     getData(); //API로 데이터 가져오기
@@ -130,7 +119,7 @@ const Home = () => {
     }
   };
 
-  //data state 관리
+  //data state 관리 method
   const onCreate = ({ date, content }) => {
     dispatch({
       type: "CREATE",
@@ -190,6 +179,11 @@ const Home = () => {
   const setEditContent = ({ todo_id }) => {
     setEditDataId(todo_id);
     toggleIsEdit(true);
+  };
+
+  // Calendar에서 클릭된 날짜 관리
+  const dateClicked = (day) => {
+    setSelectedDate(day);
   };
 
   return (
