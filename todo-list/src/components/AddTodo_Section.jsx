@@ -7,13 +7,18 @@ import {
   ContainerTitle,
 } from "../styles/styledComponents";
 import { useContext } from "react";
-import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
+import {
+  TodoListDispatchContext,
+  TodoListStateContext,
+  SelectedDateContext,
+} from "../pages/Home";
 import { useRef, useState, useEffect } from "react";
 
 // editDataId를 props로 받아서 수정 데이터를 가져올 것이다.
-const AddTodo_Section = ({ isEdit, selectedDate, editDataId }) => {
+const AddTodo_Section = ({ isEdit, editDataId }) => {
   const onEdit = useContext(TodoListDispatchContext).onEdit;
   const onCreate = useContext(TodoListDispatchContext).onCreate;
+  const selectedDate = useContext(SelectedDateContext);
   const todoData = useContext(TodoListStateContext);
 
   const [content, setContent] = useState("");

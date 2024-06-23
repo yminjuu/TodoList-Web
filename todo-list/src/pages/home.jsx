@@ -37,8 +37,6 @@ const reducer = (state, action) => {
       break;
     }
     case "EDIT": {
-      console.log(state[0].todo_id);
-      console.log(action.data.targetId);
       newState = state.map((it) =>
         it.todo_id === action.data.targetId ? { ...action.data } : it
       );
@@ -58,6 +56,7 @@ const reducer = (state, action) => {
 
 export const TodoListStateContext = React.createContext();
 export const TodoListDispatchContext = React.createContext();
+export const SelectedDateContext = React.createContext();
 
 const Home = () => {
   const dummyData = [
@@ -210,35 +209,33 @@ const Home = () => {
       <TodoListDispatchContext.Provider
         value={{ onCreate, onRemove, onEdit, onCheck, onEmojiAdd }}
       >
-        <div>
-          <LogoWrapper>
-            <Logo src="../public/logo/logo.png" alt="logo"></Logo>
-          </LogoWrapper>
-          <ContentWrapper>
-            <GridLayout>
-              <CalendarContainer>
-                <CalendarInnerContainer>
-                  <Calendar
-                    selectedDate={selectedDate}
-                    dateClicked={dateClicked}
-                  ></Calendar>
-                </CalendarInnerContainer>
-              </CalendarContainer>
-              <TODOContainer>
-                <AddTodo_Section
-                  isEdit={isEdit}
-                  selectedDate={selectedDate}
-                  editDataId={editDataId}
-                ></AddTodo_Section>
-              </TODOContainer>
-              <ListContainer>
-                <TodoList_Section
-                  setEditContent={setEditContent}
-                ></TodoList_Section>
-              </ListContainer>
-            </GridLayout>
-          </ContentWrapper>
-        </div>
+        <SelectedDateContext.Provider value={selectedDate}>
+          <div>
+            <LogoWrapper>
+              <Logo src="../public/logo/logo.png" alt="logo"></Logo>
+            </LogoWrapper>
+            <ContentWrapper>
+              <GridLayout>
+                <CalendarContainer>
+                  <CalendarInnerContainer>
+                    <Calendar dateClicked={dateClicked}></Calendar>
+                  </CalendarInnerContainer>
+                </CalendarContainer>
+                <TODOContainer>
+                  <AddTodo_Section
+                    isEdit={isEdit}
+                    editDataId={editDataId}
+                  ></AddTodo_Section>
+                </TODOContainer>
+                <ListContainer>
+                  <TodoList_Section
+                    setEditContent={setEditContent}
+                  ></TodoList_Section>
+                </ListContainer>
+              </GridLayout>
+            </ContentWrapper>
+          </div>
+        </SelectedDateContext.Provider>
       </TodoListDispatchContext.Provider>
     </TodoListStateContext.Provider>
   );

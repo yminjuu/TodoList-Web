@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { format, addMonths, subMonths } from "date-fns";
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
 import { isSameMonth, isSameDay, addDays, parse } from "date-fns";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { SelectedDateContext } from "../pages/Home";
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
@@ -88,7 +89,8 @@ const CalendarWrapper = styled.div`
   height: 100%;
 `;
 
-const Calendar = ({ selectedDate, dateClicked }) => {
+const Calendar = ({ dateClicked }) => {
+  const selectedDate = useContext(SelectedDateContext);
   // 현재 Month와 Date 관리
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
