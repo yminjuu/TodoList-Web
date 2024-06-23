@@ -28,7 +28,7 @@ const AddTodo_Section = ({ selectedDate }) => {
       return;
     }
     if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
-      onCreate(selectedDate, content, false, "NULL");
+      onCreate({ selectedDate, content, is_checked: false, emoji: "NULL" });
       setContent("");
     }
   };

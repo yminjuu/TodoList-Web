@@ -26,7 +26,13 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "REMOVE": {
-      newState = state.filter((it) => it.id !== action.targetId);
+      console.log(typeof String(state[0].todo_id));
+      console.log(String(state[0].todo_id));
+      console.log(typeof String(action.targetId));
+      console.log(action.targetId.targetId);
+      newState = state.filter(
+        (it) => String(it.todo_id) !== String(action.targetId)
+      );
       break;
     }
     case "CREATE": {
@@ -117,6 +123,10 @@ const Home = () => {
   }, []);
   //사용자 id 출력
 
+  useEffect(() => {
+    console.log("TodoData updated:", todoData);
+  }, [todoData]);
+
   const tmpId = "걸어봐위엄라이커라이온";
   const month = 6;
   const day = 17;
@@ -135,12 +145,12 @@ const Home = () => {
 
   //data state 관리
   const onCreate = ({ date, content, is_checked, emoji }) => {
-    console.log("onCreate");
+    console.log("content: ", content);
     dispatch({
       type: "CREATE",
       data: {
         date: date,
-        content,
+        content: content,
         is_checked,
         emoji,
       },

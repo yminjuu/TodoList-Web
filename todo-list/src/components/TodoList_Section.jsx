@@ -7,45 +7,21 @@ import {
   GridLayout,
   ContainerTitle,
 } from "../styles/styledComponents";
+import { TodoListStateContext } from "../pages/Home";
+import { useContext } from "react";
 
-// 필요한 props: TODO LIST전체
 const TodoList_Section = () => {
+  const data = useContext(TodoListStateContext);
+
   return (
     <ListInnerContainer>
       <ContainerTitle>MY TODO LIST</ContainerTitle>
       <TodoListWrapper>
         {/* 실제 db에서 데이터 가져와야 함: TODO LIST */}
         {}
-        <TodoItem
-          id={0}
-          isChecked={true}
-          content={"할 일 1"}
-          emoticon={"none"}
-        ></TodoItem>
-        <TodoItem
-          id={0}
-          isChecked={true}
-          content={"할 일 2"}
-          emoticon={"none"}
-        ></TodoItem>
-        <TodoItem
-          id={0}
-          isChecked={true}
-          content={"할 일 3"}
-          emoticon={"none"}
-        ></TodoItem>
-        <TodoItem
-          id={0}
-          isChecked={true}
-          content={"할 일 4"}
-          emoticon={"none"}
-        ></TodoItem>
-        <TodoItem
-          id={0}
-          isChecked={true}
-          content={"할 일 5"}
-          emoticon={"none"}
-        ></TodoItem>
+        {data.map((it) => (
+          <TodoItem {...it} key={it.id}></TodoItem>
+        ))}
       </TodoListWrapper>
     </ListInnerContainer>
   );

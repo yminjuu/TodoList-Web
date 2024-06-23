@@ -1,7 +1,22 @@
 import React from "react";
+import { useContext } from "react";
 import styled from "styled-components";
+import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
+import { useEffect } from "react";
 
-const TodoItem = ({ id, isChecked, content, emoticon }) => {
+const TodoItem = ({ date, id, content, is_checked, emoji }) => {
+  const onRemove = useContext(TodoListDispatchContext).onRemove;
+
+  const handleRemove = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      // 현재 item에 대한 id를 가져오는 로직 필요
+      // 현재는 tmp id에 대한 삭제 구현
+      onRemove(8);
+    }
+  };
+
+  const handleEdit = () => {};
+
   return (
     <ItemWrapper>
       <CheckButton type="checkbox"></CheckButton>
@@ -10,8 +25,16 @@ const TodoItem = ({ id, isChecked, content, emoticon }) => {
         <Emoji src="../public/emoji.png" alt="emoji"></Emoji>
       </ContentWrapper>
       <ButtonWrapper>
-        <ReviseBtn src="../public/revise.png" alt="revise"></ReviseBtn>
-        <DeleteBtn src="../public/delete.png" alt="delete"></DeleteBtn>
+        <ReviseBtn
+          src="../public/revise.png"
+          alt="revise"
+          onClick={handleEdit}
+        ></ReviseBtn>
+        <DeleteBtn
+          src="../public/delete.png"
+          alt="delete"
+          onClick={handleRemove}
+        ></DeleteBtn>
       </ButtonWrapper>
     </ItemWrapper>
   );
