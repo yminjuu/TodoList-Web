@@ -10,8 +10,12 @@ import {
 import { TodoListStateContext } from "../pages/Home";
 import { useContext } from "react";
 
-const TodoList_Section = () => {
+const TodoList_Section = ({ setEditContent }) => {
   const data = useContext(TodoListStateContext);
+
+  const onEditButton = ({ todo_id }) => {
+    setEditContent({ todo_id });
+  };
 
   return (
     <ListInnerContainer>
@@ -20,7 +24,11 @@ const TodoList_Section = () => {
         {/* 실제 db에서 데이터 가져와야 함: TODO LIST */}
         {}
         {data.map((it) => (
-          <TodoItem {...it} key={it.id}></TodoItem>
+          <TodoItem
+            {...it}
+            key={it.todo_id}
+            onEditButton={onEditButton}
+          ></TodoItem>
         ))}
       </TodoListWrapper>
     </ListInnerContainer>

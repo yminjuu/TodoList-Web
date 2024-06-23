@@ -4,7 +4,14 @@ import styled from "styled-components";
 import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
 import { useEffect } from "react";
 
-const TodoItem = ({ date, id, content, is_checked, emoji }) => {
+const TodoItem = ({
+  date,
+  todo_id,
+  content,
+  is_checked,
+  emoji,
+  onEditButton,
+}) => {
   const onRemove = useContext(TodoListDispatchContext).onRemove;
 
   const handleRemove = () => {
@@ -15,7 +22,9 @@ const TodoItem = ({ date, id, content, is_checked, emoji }) => {
     }
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    onEditButton({ todo_id });
+  };
 
   return (
     <ItemWrapper>

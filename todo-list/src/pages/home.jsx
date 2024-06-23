@@ -26,10 +26,6 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "REMOVE": {
-      console.log(typeof String(state[0].todo_id));
-      console.log(String(state[0].todo_id));
-      console.log(typeof String(action.targetId));
-      console.log(action.targetId.targetId);
       newState = state.filter(
         (it) => String(it.todo_id) !== String(action.targetId)
       );
@@ -41,8 +37,10 @@ const reducer = (state, action) => {
       break;
     }
     case "EDIT": {
+      console.log(state[0].todo_id);
+      console.log(action.data.targetId);
       newState = state.map((it) =>
-        it.id === action.data.id ? { ...action.data } : it
+        it.todo_id === action.data.targetId ? { ...action.data } : it
       );
       break;
     }
@@ -107,6 +105,9 @@ const Home = () => {
 
   const [todoData, dispatch] = useReducer(reducer, dummyData);
 
+  const [editDataId, setEditDataId] = useState("");
+  const [isEdit, toggleIsEdit] = useState(false);
+
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   // Calendar에서 현재 선택된 날짜 관리
@@ -164,16 +165,19 @@ const Home = () => {
     });
   };
 
-  const onEdit = (date, content, is_checked, emoji) => {
+  const onEdit = ({ targetId, date, content, is_checked, emoji }) => {
     dispatch({
       type: "EDIT",
       data: {
-        date: date,
+        targetId,
+        date,
         content,
         is_checked,
         emoji,
       },
     });
+    toggleIsEdit(false);
+    setEditDataId("");
   };
 
   const onCheck = (targetId, is_checked) => {
@@ -196,6 +200,11 @@ const Home = () => {
     });
   };
 
+  const setEditContent = ({ todo_id }) => {
+    setEditDataId(todo_id);
+    toggleIsEdit(true);
+  };
+
   return (
     <TodoListStateContext.Provider value={todoData}>
       <TodoListDispatchContext.Provider
@@ -216,10 +225,16 @@ const Home = () => {
                 </CalendarInnerContainer>
               </CalendarContainer>
               <TODOContainer>
-                <AddTodo_Section selectedDate={selectedDate}></AddTodo_Section>
+                <AddTodo_Section
+                  isEdit={isEdit}
+                  selectedDate={selectedDate}
+                  editDataId={editDataId}
+                ></AddTodo_Section>
               </TODOContainer>
               <ListContainer>
-                <TodoList_Section></TodoList_Section>
+                <TodoList_Section
+                  setEditContent={setEditContent}
+                ></TodoList_Section>
               </ListContainer>
             </GridLayout>
           </ContentWrapper>

@@ -7,12 +7,14 @@ import {
   ContainerTitle,
 } from "../styles/styledComponents";
 import { useContext } from "react";
-import { TodoListDispatchContext } from "../pages/Home";
-import { useRef, useState } from "react";
+import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
+import { useRef, useState, useEffect } from "react";
 
-const AddTodo_Section = ({ selectedDate }) => {
+// editDataId를 props로 받아서 수정 데이터를 가져올 것이다.
+const AddTodo_Section = ({ isEdit, selectedDate, editDataId }) => {
   const onEdit = useContext(TodoListDispatchContext).onEdit;
   const onCreate = useContext(TodoListDispatchContext).onCreate;
+  const todoData = useContext(TodoListStateContext);
 
   const [content, setContent] = useState("");
 
@@ -27,11 +29,39 @@ const AddTodo_Section = ({ selectedDate }) => {
       contentInput.current.focus();
       return;
     }
-    if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
-      onCreate({ selectedDate, content, is_checked: false, emoji: "NULL" });
-      setContent("");
+    if (isEdit == false) {
+      if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
+        onCreate({ selectedDate, content, is_checked: false, emoji: "NULL" });
+        setContent("");
+      }
+    } else {
+      if (window.confirm("일기를 수정하시겠습니까?")) {
+        onEdit({
+          targetId: editDataId,
+          selectedDate,
+          content,
+          is_checked: false,
+          emoji: "NULL",
+        });
+        setContent("");
+      }
     }
   };
+
+  //수정하기를 누른 TODO 데이터를 불러오기 위함
+  useEffect(() => {
+    if (isEdit) {
+      if (todoData.length >= 1) {
+        const targetTodo = todoData.find(
+          (it) => parseInt(it.todo_id) === parseInt(editDataId)
+        );
+
+        if (targetTodo) {
+          setContent(targetTodo.content);
+        }
+      }
+    }
+  }, [isEdit, editDataId, todoData]);
 
   return (
     <TODOInnerContainer>
