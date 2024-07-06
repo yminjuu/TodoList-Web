@@ -6,7 +6,14 @@ import { useEffect, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import EmojiPicker from "emoji-picker-react";
 
-const TodoItem = ({ date, todo_id, content, is_checked, onEditButton }) => {
+const TodoItem = ({
+  date,
+  todo_id,
+  content,
+  is_checked,
+  onEditButton,
+  onCheck,
+}) => {
   const onRemove = useContext(TodoListDispatchContext).onRemove;
 
   const handleRemove = () => {
@@ -19,9 +26,19 @@ const TodoItem = ({ date, todo_id, content, is_checked, onEditButton }) => {
     onEditButton({ todo_id });
   };
 
+  const handleCheck = () => {
+    console.log("check 변경");
+    onCheck(todo_id, true);
+  };
+
+  console.log({ is_checked });
   return (
     <ItemWrapper>
-      <CheckButton type="checkbox"></CheckButton>
+      <CheckButton
+        type="checkbox"
+        onChange={handleCheck}
+        checked={is_checked}
+      ></CheckButton>
       <ContentWrapper>
         <TodoContent>{content}</TodoContent>
       </ContentWrapper>
