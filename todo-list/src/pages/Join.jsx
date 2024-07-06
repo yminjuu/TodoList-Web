@@ -31,7 +31,7 @@ const Join = () => {
           password: pw,
         })
         .then((res) => {
-          console.log(res);
+          console.log("회원가입", res);
         });
     } catch (error) {
       console.log(error);

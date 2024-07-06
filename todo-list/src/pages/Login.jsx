@@ -34,7 +34,7 @@ const Login = () => {
       });
 
       if (res.status === 200) {
-        console.log(res.data);
+        console.log("로그인 ", res);
         navigate(`/home/${res.data.user_id}`);
       }
     } catch (error) {
