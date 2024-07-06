@@ -16,24 +16,22 @@ import { useRef, useState, useEffect } from "react";
 
 // editDataId를 props로 받아서 수정 데이터를 가져올 것이다.
 const AddTodo_Section = ({ isEdit, editDataId }) => {
+  // 수정 버튼 클
   const onEdit = useContext(TodoListDispatchContext).onEdit;
   const onCreate = useContext(TodoListDispatchContext).onCreate;
   const selectedDate = useContext(SelectedDateContext);
   const todoData = useContext(TodoListStateContext);
 
+  // 작성된 content 관리
   const [content, setContent] = useState("");
-
   const contentInput = useRef();
 
-  // TODO 수정 : onEdit 사용
-
-  // 새로운 TODO 추가 : onCreate 사용
-  // 필요한 것: 현재 선택된 date, content, isChecked, emoji
   const addTodo = () => {
     if (content.length < 1) {
       contentInput.current.focus();
       return;
     }
+    // 새로운 일기를 작성하는 경우
     if (isEdit == false) {
       if (window.confirm("새로운 일기를 작성하시겠습니까?")) {
         onCreate({
@@ -42,7 +40,9 @@ const AddTodo_Section = ({ isEdit, editDataId }) => {
         });
         setContent("");
       }
-    } else {
+    }
+    // 수정 버튼을 눌러서 content를 불러와야 하는 경우
+    else {
       if (window.confirm("일기를 수정하시겠습니까?")) {
         onEdit({
           targetId: editDataId,

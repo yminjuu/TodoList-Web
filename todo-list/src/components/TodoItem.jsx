@@ -11,8 +11,6 @@ const TodoItem = ({ date, todo_id, content, is_checked, onEditButton }) => {
 
   const handleRemove = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      // 현재 item에 대한 id를 가져오는 로직 필요
-      // 현재는 tmp id에 대한 삭제 구현
       onRemove(todo_id);
     }
   };
@@ -21,37 +19,11 @@ const TodoItem = ({ date, todo_id, content, is_checked, onEditButton }) => {
     onEditButton({ todo_id });
   };
 
-  const [emoji, setEmoji] = useState("");
-
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
-
-  const onEmojiClick = () => {
-    console.log("이모지 클릭");
-  };
-
   return (
     <ItemWrapper>
       <CheckButton type="checkbox"></CheckButton>
       <ContentWrapper>
         <TodoContent>{content}</TodoContent>
-        {/* <Emoji src="../public/emoji.png" alt="emoji"></Emoji> */}
-        <EmojiWrapper>
-          {/* <InputEmoji
-            value={emoji}
-            onChange={setEmoji}
-            cleanOnEnter
-            onEnter={handleOnEnter}
-            placeholder="Type a message"
-            height={20}
-          ></InputEmoji> */}
-          <EmojiPicker
-            height={25}
-            width={25}
-            onEmojiClick={onEmojiClick}
-          ></EmojiPicker>
-        </EmojiWrapper>
       </ContentWrapper>
       <ButtonWrapper>
         <ReviseBtn

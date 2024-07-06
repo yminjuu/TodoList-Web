@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useRef } from "react";
 import {
   LoginWrapper,
   LogoWrapper,
@@ -23,6 +22,7 @@ const Join = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
+  // 회원가입 버튼을 눌렀을 경우
   const postRegister = () => {
     try {
       axios
@@ -31,7 +31,7 @@ const Join = () => {
           password: pw,
         })
         .then((res) => {
-          console.log(res);
+          console.log("회원가입", res);
         });
     } catch (error) {
       console.log(error);
