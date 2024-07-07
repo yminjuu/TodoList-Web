@@ -20,69 +20,38 @@ import { useReducer } from "react";
 const reducer = (state, action) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   let newState = [];
-
   switch (action.type) {
     case "INIT": {
       return action.data;
     }
     case "REMOVE": {
-      try {
-        axios
-          .delete(
-            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`
-          )
-          .then((res) => {
-            console.log("삭제", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
       newState = state.filter(
         (it) => String(it.todo_id) !== String(action.data.targetId)
       );
       break;
     }
     case "CREATE": {
-      const newItem = { ...action.data };
-      newState = [newItem, ...state];
-      try {
-        axios
-          .post(`${BASE_URL}/api/todos/${action.data.userId}`, {
-            date: action.data.date,
-            content: action.data.content,
-          })
-          .then((res) => {
-            console.log("투두 작성 ", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      newState = action.data.newState;
       break;
     }
     case "EDIT": {
-      try {
-        axios
-          .patch(
-            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`,
-            {
-              date: action.data.date,
-              content: action.data.content,
-            }
-          )
-          .then((res) => {
-            console.log("수정", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
       newState = state.map((it) =>
-        it.todo_id === action.data.targetId ? { ...action.data } : it
+        it.todo_id === action.data.todo_id ? { ...action.data } : it
       );
       break;
+    }
+    case "CHECK": {
+      newState = state.map((it) =>
+        it.todo_id === action.data.todo_id ? { ...action.data } : it
+      );
+      break;
+    }
+    case "EMOJI": {
     }
     default:
       return state;
   }
+  console.log("newState 확인", newState);
   return newState;
 };
 
@@ -109,11 +78,12 @@ const Home = () => {
   const [filterOn, toggleFilterOn] = useState(false);
 
   // selectedDate에 대해 남은 todo 개수 관리
-  const [todoLeft, getTodoLeft] = useState();
+  const [todoLeft, setTodoLeft] = useState(0);
 
   useEffect(() => {
     if (!filterOn) getData(); //API로 데이터 가져오기
     else getFilteredData(); //가나다순 정렬된 데이터 가져오기
+    todoLeftGet();
   }, [selectedDate, filterOn]);
 
   const getData = async () => {
@@ -127,7 +97,6 @@ const Home = () => {
         type: "INIT",
         data,
       });
-      console.log("받아온 필터링되지 않은 데이터", data);
     } catch (error) {
       console.log(error);
     }
@@ -138,13 +107,26 @@ const Home = () => {
       const { data } = await axios.get(
         `${BASE_URL}/api/todos/${id}?month=${
           selectedDate.getMonth() + 1
-        }&day=${selectedDate.getDate()}`
+        }&day=${selectedDate.getDate()}&sort=asc`
       );
       dispatch({
         type: "INIT",
         data,
       });
-      console.log("받아온 필터링된 데이터", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const todoLeftGet = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/todos/${id}/remains?month=${
+          selectedDate.getMonth() + 1
+        }&day=${selectedDate.getDate()}`
+      );
+      const leftData = response.data.count;
+      setTodoLeft(leftData);
     } catch (error) {
       console.log(error);
     }
@@ -156,51 +138,103 @@ const Home = () => {
 
   //data state 관리 method
   const onCreate = ({ date, content }) => {
-    dispatch({
-      type: "CREATE",
-      data: {
-        userId: id,
-        date: date,
-        content: content,
-      },
-    });
+    try {
+      axios
+        .post(`${BASE_URL}/api/todos/${id}`, {
+          date,
+          content,
+        })
+        .then((res) => {
+          const newItem = { ...res.data };
+          const newState = [newItem, ...todoData];
+          dispatch({
+            type: "CREATE",
+            data: {
+              newState,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onRemove = (targetId) => {
-    dispatch({
-      type: "REMOVE",
-      data: { userId: id, targetId },
-    });
+    try {
+      axios
+        .delete(`${BASE_URL}/api/todos/${id}/${targetId}`)
+        .then((res) => {
+          console.log("삭제", res);
+        })
+        .then((res) => {
+          dispatch({
+            type: "REMOVE",
+            data: { targetId },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onEdit = ({ targetId, date, content, is_checked, emoji }) => {
-    dispatch({
-      type: "EDIT",
-      data: {
-        userId: id,
-        targetId,
-        date,
-        content,
-        is_checked,
-        emoji,
-      },
-    });
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}`, {
+          date: date,
+          content: content,
+        })
+        .then((res) => {
+          dispatch({
+            type: "EDIT",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
     toggleIsEdit(false);
     setEditDataId("");
   };
 
   const onCheck = (targetId, is_checked) => {
-    dispatch({
-      type: "CHECK",
-      data: {
-        id,
-        targetId,
-        is_checked,
-      },
-    });
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}/check`, {
+          is_checked,
+        })
+        .then((res) => {
+          dispatch({
+            type: "CHECK",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onEmojiAdd = (targetId, emoji) => {
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}/reviews`, {
+          emoji: emoji,
+        })
+        .then((res) => {
+          dispatch({
+            type: "CHECK",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
     dispatch({
       type: "CHECK",
       data: {
@@ -221,28 +255,6 @@ const Home = () => {
     setSelectedDate(day);
   };
 
-  const todoLeftGet = () => {
-    try {
-      const todoLeft = axios
-        .get(
-          `${BASE_URL}/api/todos/${id}?month=${
-            selectedDate.getMonth() + 1
-          }&day=${selectedDate.getDate()}`
-        )
-        .then(() => {
-          // todoleft를 넣기
-          getTodoLeft(todoLeft);
-        });
-      dispatch({
-        type: "INIT",
-        data,
-      });
-      console.log("받아온 필터링된 데이터", data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <TodoListStateContext.Provider value={todoData}>
       <TodoListDispatchContext.Provider
@@ -257,33 +269,33 @@ const Home = () => {
         }}
       >
         <SelectedDateContext.Provider value={selectedDate}>
-          <TodoLeftContext.Provider value={{ todoLeftGet, todoLeft }}>
-            <div>
-              <LogoWrapper>
-                <Logo src="../public/logo/logo.png" alt="logo"></Logo>
-              </LogoWrapper>
-              <ContentWrapper>
-                <GridLayout>
-                  <CalendarContainer>
-                    <CalendarInnerContainer>
-                      <Calendar dateClicked={dateClicked}></Calendar>
-                    </CalendarInnerContainer>
-                  </CalendarContainer>
-                  <TODOContainer>
-                    <AddTodo_Section
-                      isEdit={isEdit}
-                      editDataId={editDataId}
-                    ></AddTodo_Section>
-                  </TODOContainer>
-                  <ListContainer>
-                    <TodoList_Section
-                      setEditContent={setEditContent}
-                    ></TodoList_Section>
-                  </ListContainer>
-                </GridLayout>
-              </ContentWrapper>
-            </div>
-          </TodoLeftContext.Provider>
+          <div>
+            <LogoWrapper>
+              <Logo src="../public/logo/logo.png" alt="logo"></Logo>
+            </LogoWrapper>
+            <ContentWrapper>
+              <GridLayout>
+                <CalendarContainer>
+                  <CalendarInnerContainer>
+                    <Calendar dateClicked={dateClicked}></Calendar>
+                  </CalendarInnerContainer>
+                </CalendarContainer>
+                <TODOContainer>
+                  <AddTodo_Section
+                    isEdit={isEdit}
+                    editDataId={editDataId}
+                  ></AddTodo_Section>
+                </TODOContainer>
+                <ListContainer>
+                  <TodoList_Section
+                    setEditContent={setEditContent}
+                    filterOn={filterOn}
+                    todoLeft={todoLeft}
+                  ></TodoList_Section>
+                </ListContainer>
+              </GridLayout>
+            </ContentWrapper>
+          </div>
         </SelectedDateContext.Provider>
       </TodoListDispatchContext.Provider>
     </TodoListStateContext.Provider>
@@ -345,7 +357,3 @@ const ListContainer = styled(BaseContainer)`
 `;
 
 export default Home;
-
-// 좌상단 로고
-// 3개의 container
-//
