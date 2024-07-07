@@ -24,87 +24,32 @@ const reducer = (state, action) => {
     case "INIT": {
       return action.data;
     }
-    case "FILTERED": {
-    }
     case "REMOVE": {
-      try {
-        axios
-          .delete(
-            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`
-          )
-          .then((res) => {
-            console.log("삭제", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
       newState = state.filter(
         (it) => String(it.todo_id) !== String(action.data.targetId)
       );
       break;
     }
     case "CREATE": {
-      const newItem = { ...action.data };
-      newState = [newItem, ...state];
-      try {
-        axios
-          .post(`${BASE_URL}/api/todos/${action.data.userId}`, {
-            date: action.data.date,
-            content: action.data.content,
-          })
-          .then((res) => {
-            console.log("투두 작성 ", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      newState = action.data.newState;
       break;
     }
     case "EDIT": {
-      try {
-        axios
-          .patch(
-            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}`,
-            {
-              date: action.data.date,
-              content: action.data.content,
-            }
-          )
-          .then((res) => {
-            console.log("수정", res);
-          });
-      } catch (error) {
-        console.log(error);
-      }
       newState = state.map((it) =>
-        it.todo_id === action.data.targetId ? { ...action.data } : it
+        it.todo_id === action.data.todo_id ? { ...action.data } : it
       );
       break;
     }
     case "CHECK": {
-      try {
-        axios
-          .patch(
-            `${BASE_URL}/api/todos/${action.data.userId}/${action.data.targetId}/check`,
-            {
-              is_checked: action.data.is_checked,
-            }
-          )
-          .then((res) => {
-            newState = state.map((it) =>
-              it.todo_id === action.data.targetId
-                ? { ...action.data, is_checked: res.data.is_checked }
-                : it
-            );
-          });
-        break;
-      } catch (error) {
-        console.log(error);
-      }
+      newState = state.map((it) =>
+        it.todo_id === action.data.todo_id ? { ...action.data } : it
+      );
+      break;
     }
     default:
       return state;
   }
+  console.log("newState 확인", newState);
   return newState;
 };
 
@@ -150,7 +95,6 @@ const Home = () => {
         type: "INIT",
         data,
       });
-      console.log("받아온 필터링되지 않은 데이터", data);
     } catch (error) {
       console.log(error);
     }
@@ -167,7 +111,6 @@ const Home = () => {
         type: "INIT",
         data,
       });
-      console.log("받아온 필터링된 데이터", data);
     } catch (error) {
       console.log(error);
     }
@@ -193,48 +136,85 @@ const Home = () => {
 
   //data state 관리 method
   const onCreate = ({ date, content }) => {
-    dispatch({
-      type: "CREATE",
-      data: {
-        userId: id,
-        date: date,
-        content: content,
-      },
-    });
+    try {
+      axios
+        .post(`${BASE_URL}/api/todos/${id}`, {
+          date,
+          content,
+        })
+        .then((res) => {
+          const newItem = { ...res.data };
+          const newState = [newItem, ...todoData];
+          dispatch({
+            type: "CREATE",
+            data: {
+              newState,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onRemove = (targetId) => {
-    dispatch({
-      type: "REMOVE",
-      data: { userId: id, targetId },
-    });
+    try {
+      axios
+        .delete(`${BASE_URL}/api/todos/${id}/${targetId}`)
+        .then((res) => {
+          console.log("삭제", res);
+        })
+        .then((res) => {
+          dispatch({
+            type: "REMOVE",
+            data: { targetId },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onEdit = ({ targetId, date, content, is_checked, emoji }) => {
-    dispatch({
-      type: "EDIT",
-      data: {
-        userId: id,
-        targetId,
-        date,
-        content,
-        is_checked,
-        emoji,
-      },
-    });
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}`, {
+          date: date,
+          content: content,
+        })
+        .then((res) => {
+          dispatch({
+            type: "EDIT",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
     toggleIsEdit(false);
     setEditDataId("");
   };
 
   const onCheck = (targetId, is_checked) => {
-    dispatch({
-      type: "CHECK",
-      data: {
-        userId: id,
-        targetId,
-        is_checked,
-      },
-    });
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}/check`, {
+          is_checked,
+        })
+        .then((res) => {
+          console.log("response확인", res.data);
+          dispatch({
+            type: "CHECK",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onEmojiAdd = (targetId, emoji) => {
@@ -360,7 +340,3 @@ const ListContainer = styled(BaseContainer)`
 `;
 
 export default Home;
-
-// 좌상단 로고
-// 3개의 container
-//

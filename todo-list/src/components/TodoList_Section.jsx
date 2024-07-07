@@ -18,7 +18,6 @@ import InputEmoji from "react-input-emoji";
 import { useEffect } from "react";
 
 const TodoList_Section = ({ setEditContent, filterOn, todoLeft }) => {
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const data = useContext(TodoListStateContext);
   const selectedDate = useContext(SelectedDateContext);
 
@@ -52,8 +51,6 @@ const TodoList_Section = ({ setEditContent, filterOn, todoLeft }) => {
     const sortedList = filteredList.sort(compare); //sort메서드에 직접 만든 비교함수를 전달한다.
     return sortedList;
   };
-
-  console.log("개수", todoLeft);
 
   return (
     <ListInnerContainer>
@@ -139,6 +136,7 @@ const FilterButton = styled.button`
 `;
 
 const FilterTrueButton = styled.button`
+  font-weight: 700;
   width: 100px;
   height: 30px;
   background: transparent;
@@ -146,7 +144,6 @@ const FilterTrueButton = styled.button`
   border: 2px solid #63c3ff;
   border-radius: 5px;
   color: #63c3ff;
-  color: #ff5050;
 `;
 
 const TodoLeftText = styled.div`

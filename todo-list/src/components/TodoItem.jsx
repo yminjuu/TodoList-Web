@@ -3,8 +3,6 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { TodoListDispatchContext, TodoListStateContext } from "../pages/Home";
 import { useEffect, useState } from "react";
-import InputEmoji from "react-input-emoji";
-import EmojiPicker from "emoji-picker-react";
 
 const TodoItem = ({
   date,
@@ -15,6 +13,8 @@ const TodoItem = ({
   onCheck,
 }) => {
   const onRemove = useContext(TodoListDispatchContext).onRemove;
+
+  const [isChecked, toggleChecked] = useState(is_checked);
 
   const handleRemove = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -27,17 +27,22 @@ const TodoItem = ({
   };
 
   const handleCheck = () => {
-    console.log("check 변경");
-    onCheck(todo_id, true);
+    console.log(isChecked);
+    toggleChecked(!isChecked);
+    console.log("토글 후", isChecked);
+    onCheck(todo_id, isChecked);
   };
 
-  console.log({ is_checked });
+  // useEffect(()=>{
+
+  // },)
+
   return (
     <ItemWrapper>
       <CheckButton
         type="checkbox"
         onChange={handleCheck}
-        checked={is_checked}
+        checked={isChecked}
       ></CheckButton>
       <ContentWrapper>
         <TodoContent>{content}</TodoContent>
