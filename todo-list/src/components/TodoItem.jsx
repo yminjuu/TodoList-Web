@@ -27,15 +27,10 @@ const TodoItem = ({
   };
 
   const handleCheck = () => {
-    console.log(isChecked);
+    console.log(!isChecked);
     toggleChecked(!isChecked);
-    console.log("토글 후", isChecked);
-    onCheck(todo_id, isChecked);
+    onCheck(todo_id, !isChecked);
   };
-
-  // useEffect(()=>{
-
-  // },)
 
   return (
     <ItemWrapper>
@@ -146,9 +141,3 @@ const DeleteBtn = styled.img`
 `;
 
 export default TodoItem;
-
-// 체크 버튼
-// 할 일 내용 (content)
-// 이모티콘 추가 버튼
-// 수정 버튼
-// delete button

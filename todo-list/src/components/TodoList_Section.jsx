@@ -34,24 +34,6 @@ const TodoList_Section = ({ setEditContent, filterOn, todoLeft }) => {
     setEditContent({ todo_id });
   };
 
-  // 선택된 날짜에 맞는 TODO를 반환함
-  const getProcessedTodoList = () => {
-    const dateClickCallback = (item) => {
-      return isSameDay(item.date, selectedDate);
-    };
-
-    const compare = (a, b) => {
-      // 시간이 가까운 순으로 나열
-      return parseInt(b.date) - parseInt(a.date);
-    };
-    // 원본 배열을 복사하여 깊은 복사
-    const copyList = JSON.parse(JSON.stringify(data));
-
-    const filteredList = copyList.filter((it) => dateClickCallback(it)); //직접 만든 필터링 함수를 전달: 알맞은 날짜 데이터만 가져옴
-    const sortedList = filteredList.sort(compare); //sort메서드에 직접 만든 비교함수를 전달한다.
-    return sortedList;
-  };
-
   return (
     <ListInnerContainer>
       <TitleWrapper>
@@ -80,7 +62,7 @@ const TodoList_Section = ({ setEditContent, filterOn, todoLeft }) => {
         ) : (
           <TodoLeftText todoLeft={todoLeft}>남은 할 일이 없어요!</TodoLeftText>
         )}
-        {getProcessedTodoList().map((it) => (
+        {data.map((it) => (
           <TodoItem
             {...it}
             key={it.todo_id}
