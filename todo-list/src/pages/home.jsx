@@ -46,6 +46,8 @@ const reducer = (state, action) => {
       );
       break;
     }
+    case "EMOJI": {
+    }
     default:
       return state;
   }
@@ -204,7 +206,6 @@ const Home = () => {
           is_checked,
         })
         .then((res) => {
-          console.log("response확인", res.data);
           dispatch({
             type: "CHECK",
             data: {
@@ -218,6 +219,22 @@ const Home = () => {
   };
 
   const onEmojiAdd = (targetId, emoji) => {
+    try {
+      axios
+        .patch(`${BASE_URL}/api/todos/${id}/${targetId}/reviews`, {
+          emoji: emoji,
+        })
+        .then((res) => {
+          dispatch({
+            type: "CHECK",
+            data: {
+              ...res.data,
+            },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
     dispatch({
       type: "CHECK",
       data: {

@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import {
-  BaseContainer,
-  BaseInnerContainer,
-  GridLayout,
-  ContainerTitle,
-} from "../styles/styledComponents";
+import { BaseInnerContainer, ContainerTitle } from "../styles/styledComponents";
 import { useContext } from "react";
 import {
   TodoListDispatchContext,
@@ -21,6 +16,8 @@ const AddTodo_Section = ({ isEdit, editDataId }) => {
   const onCreate = useContext(TodoListDispatchContext).onCreate;
   const selectedDate = useContext(SelectedDateContext);
   const todoData = useContext(TodoListStateContext);
+
+  console.log(selectedDate);
 
   // 작성된 content 관리
   const [content, setContent] = useState("");
@@ -73,7 +70,15 @@ const AddTodo_Section = ({ isEdit, editDataId }) => {
 
   return (
     <TODOInnerContainer>
-      <ContainerTitle>ADD TODO</ContainerTitle>
+      <TitleContainer>
+        <StyledContainerTitle>ADD TODO</StyledContainerTitle>
+        <InfoWrapper>
+          <InfoDate>
+            {selectedDate.getFullYear()} . {selectedDate.getMonth() + 1} .{" "}
+            {selectedDate.getDate()}
+          </InfoDate>
+        </InfoWrapper>
+      </TitleContainer>
       <TODOInput
         placeholder="할 일을 추가하세요."
         ref={contentInput}
@@ -100,9 +105,39 @@ const TODOInnerContainer = styled(BaseInnerContainer)`
   flex-shrink: 0;
 `;
 
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+`;
+
+const StyledContainerTitle = styled(ContainerTitle)`
+  width: 150px;
+`;
+
+const InfoWrapper = styled.div`
+  width: 100%;
+  height: 30px;
+  background: transparent;
+  line-height: 37px;
+  font-size: 17px;
+  margin: 0;
+`;
+
+const InfoDate = styled.div`
+  background: transparent;
+  font-weight: 400;
+`;
+
+const EmojiInput = styled.div`
+  background: transparent;
+`;
+
 const TODOInput = styled.textarea`
   width: 90%;
-  height: 140px;
+  height: 120px;
   flex-shrink: 0;
   border-radius: 7px;
   border: 1px solid #c8c8c8;

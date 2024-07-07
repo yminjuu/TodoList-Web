@@ -6,6 +6,7 @@ import {
   BaseInnerContainer,
   GridLayout,
   ContainerTitle,
+  Input,
 } from "../styles/styledComponents";
 import {
   SelectedDateContext,
