@@ -13,3 +13,7 @@
 
 ### Home Page
 ![image](https://github.com/yminjuu/TodoList-Web/assets/124325672/3d66085d-47cf-48c4-91d7-978f4850fe87)
+
+### 동작 시뮬레이션
+![2024-07-089 46 43-ezgif com-video-to-gif-converter (1)](https://github.com/yminjuu/TodoList-Web/assets/124325672/4664e929-0639-4e0d-8819-4414201edaed)
+
